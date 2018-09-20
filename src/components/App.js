@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import withAuth from './withAuth'
 import logo from '../images/logo.svg';
 import Login from './Login.js'
 import '../css/App.css';
