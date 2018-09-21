@@ -20,6 +20,13 @@ export default class AuthService {
       })
     }
 
+    register(user){
+      return this.fetch(`${this.domain}/users`, {//our backend endpoint
+        method:'POST',
+        body: JSON.stringify(user),
+      }).then(res => res);
+    }
+
     loggedIn() { // A check to see if user is logged in
       const token = this._getTokenFromLocalStorage()
       return !!token && !this.isTokenExpired(token)
