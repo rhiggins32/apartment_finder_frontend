@@ -3,13 +3,26 @@ import ReactDOM from 'react-dom';
 import './css/Index.css';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import {  Router, Route } from 'react-router-dom';
 import Login from './components/Login';
 import RegisterPage from './components/Register'
+import Detail from './Apartment/Detail'
+import All from './Apartment/All'
+import createBrowserHistory from 'history/createBrowserHistory';
+import Header from './components/Header'
+
+const history = createBrowserHistory();
+
 ReactDOM.render(
 
-  <Router>
+  <Router history={history}>
     <div>
+      <Route component={Header}/>
+      <Route
+        exact
+        path = '/all'
+        component={All}
+        />
       <Route
         exact
         path="/register"
@@ -25,11 +38,6 @@ ReactDOM.render(
         path="/login"
         component={Login}
         />
-        <Route
-          exact
-          path = '/'
-          component={App}
-          />
     </div>
   </Router>
   , document.getElementById('root'));
