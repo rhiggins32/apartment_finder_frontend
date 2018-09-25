@@ -1,96 +1,87 @@
 import React, { Component } from 'react';
-import { Redirect,Link } from 'react-router-dom'
-import AuthService from '../services/AuthService'
 import '../css/Login.css';
+import AuthService from '../services/AuthService';
 
-
-class RegisterPage extends Component {
-  constructor(props) {
-    super(props)
-
-    this.auth = new AuthService()
+export default class Register extends Component {
+  constructor(){
+    super()
+    this.Auth = new AuthService();
     this.state = {
-      registeredSuccess: false,
-      errors: "",
-      form: {
-              user: {
-                      first_name: "test",
-                      last_name: "test1",
-                      email: "test@example.com",
-                      password: "123134",
-              }
+      form:{
+        user: {
+          first_name: '',
+          last_name: '',
+          email: '',
+          password: ''
+        }
       }
-    }
+    };
   }
+
+  handleChange(e){
+    let { form } = this.state;
+    form.user[e.target.name] = e.target.value;
+    this.setState({ form })
+  }
+
+  handleSubmit(e){
+    e.preventDefault();
+    let {form} = this.state;
+    this.Auth.register(form)
+    .then(res => {
+      this.props.history.replace('/dashboard')
+    })
+    .catch(err => { alert(err) });
+  }
+
   render(){
-    let {first_name, last_name, email, password} = this.state.form.user
+    console.log(this.state);
+    let { email, password, first_name, last_name } = this.state.form.user;
     return (
       <div className="center">
-        <div className="card">
-
-        <h2> Welcome! Register here:</h2>
-        <form onSubmit={this.onSubmit}>
-            <input
-              className="form-item"
-              type="text"
-              name="first_name"
-              value={first_name}
-            onChange={this.onChange}
-            />
-            <input
+      <div className="card">
+        <h1>Register</h1>
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          <input
             className="form-item"
-						type="text"
-						name="last_name"
-						value={last_name}
-						onChange={this.onChange}
-					/>
-            <input
-              className="form-item"
-              type="email"
-              name="email"
-              value={email}
-              onChange={this.onChange}
+            placeholder="First Name:"
+            name="first_name"
+            type="text"
+            onChange={this.handleChange.bind(this)}
+            value={first_name}
             />
-            {this.state.errors.email && <div> Error: Email {this.state.errors.email[0]}</div>}
             <input
               className="form-item"
-              type="password"
+              placeholder="Last Name:"
+              name="last_name"
+              type="text"
+              onChange={this.handleChange.bind(this)}
+              value={last_name}
+            />
+            <input
+              className="form-item"
+              placeholder="Email:"
+              name="email"
+              type="text"
+              onChange={this.handleChange.bind(this)}
+              value={email}
+            />
+            <input
+              className="form-item"
+              placeholder="Password:"
               name="password"
+              type="password"
+              onChange={this.handleChange.bind(this)}
               value={password}
-              onChange={this.onChange}
-              />
-              {this.state.errors.password && <div>Error: Password {this.state.errors.password[0]}</div>}
-              <button className="form-submit" onSubmit={this.onSubmit}>Register</button>
-        </form>
-        {this.state.registerSuccess && <Redirect to="/protected" />}
-
-         </div>
+            />
+            <input
+              className="form-submit"
+              value="SUBMIT"
+              type="submit"
+            />
+          </form>
         </div>
+      </div>
     )
   }
-
-  onChange = (e) => {
-      let { form } = this.state
-      form.user[e.target.name] = e.target.value
-      this.setState({ form })
-  }
-
-  onSubmit = (e) => {
-    e.preventDefault()
-
-    this.auth.register(this.state.form)
-    .then(json => {
-            console.log("Got to second then:", json)
-            if(json.errors) {
-              this.setState({
-                errors: json.errors
-              })
-            }
-            this.setState({
-                registerSuccess: true
-            })
-      })
-  }
 }
-
-export default RegisterPage

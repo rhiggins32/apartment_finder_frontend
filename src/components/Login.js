@@ -1,53 +1,58 @@
 import React, { Component } from 'react';
-import AuthService from '../services/AuthService';
 import '../css/Login.css';
+import AuthService from '../services/AuthService';
 
-class Login extends Component {
+export default class Login extends Component {
   constructor(){
     super()
-    this.Auth = new AuthService()
-    this.state={
+    this.Auth = new AuthService();
+    this.state = {
+      errors: [],
       email: '',
       password: ''
-    }
+    };
   }
 
   handleChange(e){
-    this.setState({ [e.target.name]: e.target.value })
+    this.setState({[e.target.name]: e.target.value})
   }
 
-  handleFormSubmit(e){
-    e.preventDefault()
-    this.Auth.login(this.state.email,this.state.password)
-    .then(res =>{
-      this.props.history.replace('/')
+  handleSubmit(e){
+    e.preventDefault();
+    let {email, password} = this.state;
+    this.Auth.login(email, password)
+    .then(res => {
+      this.props.history.replace('/dashboard')
     })
-    .catch(err =>{ alert(err) })
+    .catch(err => {
+      console.log(err);
+      //this.setState({errors: err})
+      alert(err)
+    });
   }
 
-  render() {
+  render(){
+    let {email, password} = this.state;
     return (
       <div className="center">
         <div className="card">
           <h1>Login</h1>
-          <form
-            onSubmit={this.handleFormSubmit.bind(this)}
-          >
+          <form onSubmit={this.handleSubmit.bind(this)}>
             <input
               className="form-item"
-              placeholder="email goes here..."
+              placeholder="Email:"
               name="email"
               type="text"
               onChange={this.handleChange.bind(this)}
-              value={this.state.email}
+              value={email}
             />
             <input
               className="form-item"
-              placeholder="Password goes here..."
+              placeholder="Password:"
               name="password"
               type="password"
               onChange={this.handleChange.bind(this)}
-              value={this.state.password}
+              value={password}
             />
             <input
               className="form-submit"
@@ -56,9 +61,9 @@ class Login extends Component {
             />
           </form>
         </div>
+        {this.state.errors && <h1>{this.state.errors}</h1>}
       </div>
-    );
+    )
   }
 }
 
-export default Login;

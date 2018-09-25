@@ -1,5 +1,5 @@
 .center{
-  background-color: #3B5998;
+  background-color: #7ac143;
   position: absolute;
   height: 100%;
   width: 100%;
@@ -9,7 +9,7 @@
 }
 
 .card{
-  background-color: #fffffe;
+  background-color: #fff;
   border-radius: 15px;
   padding: 0.8rem;
 }
@@ -17,14 +17,12 @@
 .card > form{
   display: flex;
   flex-direction: column;
-  background-color: #fffffe;
 }
 
 .card h1{
   text-align: center;
   margin-top: 0;
   margin-bottom: 10px;
-
 }
 
 .form-item{
@@ -38,7 +36,7 @@
 .form-submit{
   height: 35px;
   color: #fff;
-  background-color: #3B5998;
+  background-color: #7ac143;
   border: none;
   transition: 0.3s opacity ease;
   cursor: pointer;
