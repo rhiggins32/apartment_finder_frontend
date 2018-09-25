@@ -55,7 +55,7 @@ let deleteApartment = function(id){
 
 let getUserApartments = function(user_id){
   console.log("in getUserApartments");
-  return fetch(BASE + '/apartments/user/' + user_id)
+  return fetch(BASE + '/user/' + user_id +'/apartments')
   .then((res) => {
     console.log("running fetch user apartments");
     let json = res.json();
