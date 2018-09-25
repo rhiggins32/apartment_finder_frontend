@@ -1,17 +1,34 @@
 import React, { Component } from 'react';
 import '../css/Login.css';
+import AuthService from '../services/AuthService';
 
 export default class Login extends Component {
   constructor(){
     super()
+    this.Auth = new AuthService();
     this.state = {
+      errors: [],
       email: '',
       password: ''
-    }
+    };
   }
 
   handleChange(e){
     this.setState({[e.target.name]: e.target.value})
+  }
+
+  handleSubmit(e){
+    e.preventDefault();
+    let {email, password} = this.state;
+    this.Auth.login(email, password)
+    .then(res => {
+      this.props.history.replace('/dashboard')
+    })
+    .catch(err => {
+      console.log(err);
+      //this.setState({errors: err})
+      alert(err)
+    });
   }
 
   render(){
@@ -20,7 +37,7 @@ export default class Login extends Component {
       <div className="center">
         <div className="card">
           <h1>Login</h1>
-          <form>
+          <form onSubmit={this.handleSubmit.bind(this)}>
             <input
               className="form-item"
               placeholder="Email:"
@@ -44,6 +61,7 @@ export default class Login extends Component {
             />
           </form>
         </div>
+        {this.state.errors && <h1>{this.state.errors}</h1>}
       </div>
     )
   }
