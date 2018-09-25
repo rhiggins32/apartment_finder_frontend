@@ -43,3 +43,4 @@ ReactDOM.render(
 registerServiceWorker();
 
 // <Route exact path = '/apartments/:id' component={ApartmentCard} />
+
