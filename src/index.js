@@ -10,7 +10,6 @@ import AllApartments from './Apartments/All';
 import ShowApartment from './Apartments/Show';
 import EditApartment from './Apartments/Edit';
 import NewApartment from './Apartments/New';
-import DeleteApartment from './Apartments/Delete';
 import ApartmentCard from './components/ApartmentCard';
 import ApartmentsContainer from './containers/ApartmentsContainer';
 import Header from './components/Header';
@@ -28,7 +27,6 @@ ReactDOM.render(
       <Switch>
         <Route exact path = '/apartments/:id/edit' component={EditApartment} />
         <Route exact path = '/apartments/new' component={NewApartment} />
-        <Route exact path = '/apartments/delete/:id' component={DeleteApartment} />
         <Route exact path = '/apartments/:id' component={ShowApartment} />
         <Route exact path = '/apartments' component={AllApartments} />
         <Route exact path = '/login' component={Login} />
@@ -43,4 +41,3 @@ ReactDOM.render(
 registerServiceWorker();
 
 // <Route exact path = '/apartments/:id' component={ApartmentCard} />
-

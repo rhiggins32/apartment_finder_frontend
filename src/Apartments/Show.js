@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../css/Apartments.css';
 import { getApartment } from '../services/apartments_api';
 
-export default class ApartmentCard extends Component {
+export default class Show extends Component {
   constructor(props){
     super(props);
     this.state = {
