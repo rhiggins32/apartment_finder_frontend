@@ -20,7 +20,7 @@ export default class Header extends Component {
   }
   render(){
     return (
-      <nav>
+      <nav className="nav-bar">
         {!this.Auth.loggedIn() && <button type="button" className="form-submit" onClick={this.handleLogin.bind(this)}>Login</button>}
         {this.Auth.loggedIn() && <button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Logout</button>}
         {!this.Auth.loggedIn() && <button type="button" className="form-submit" onClick={this.handleRegister.bind(this)}>Register</button>}
