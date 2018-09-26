@@ -46,11 +46,32 @@ let createApartment = function(apartment){
   })
 }
 
+let editApartment = function(apartment){
+  console.log("editing apartment", apartment, apartment.id);
+  return fetch(BASE + '/apartments/' + apartment.id, {
+    body: JSON.stringify(apartment),
+    headers: {
+      'Content-Type':'application/json',
+    },
+    method: 'PATCH'
+  })
+  .then((res) => {
+    let json = res.json();
+    return json;
+  }).catch(err => {
+    alert(err);
+    return err;
+  })
+}
+
 let deleteApartment = function(id){
   console.log("delete apartment by id...", id);
-  return fetch(BASE + '/apartments' + id, {
+  return fetch(BASE + '/apartments/' + id, {
+    headers: {
+      'Content-Type':'application/json',
+    },
     method: 'DELETE'
-  }).then(res => res.json());
+  })
 }
 
 let getUserApartments = function(user_id){
@@ -88,6 +109,8 @@ export {
   getApartments,
   getApartment,
   createApartment,
+  editApartment,
+  deleteApartment,
   getUserApartments,
   getUser
 }

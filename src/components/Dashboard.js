@@ -3,6 +3,8 @@ import Header from './Header';
 import withAuth from './withAuth';
 import { getUserApartments, getUser } from '../services/apartments_api.js'
 import AuthService from '../services/AuthService';
+import Button from '../components/Button';
+import { deleteApartment } from '../services/apartments_api';
 
 class Dashboard extends Component {
   constructor(props){
@@ -16,7 +18,8 @@ class Dashboard extends Component {
 
   componentWillMount(){
     console.log("props", this.props);
-    let user_id = this.props.userId;
+    //let user_id = this.props.userId;
+    let user_id = this.auth.getUserId();
     getUser(user_id).then((user) => {
       console.log("user",user);
       this.setState({user: user});
@@ -27,11 +30,23 @@ class Dashboard extends Component {
       console.log("response",apt);
       this.setState({apartments: apt})
     })})
-    //if(this.props.userId){
-    //}
-    // else {
-    //   this.setState({error: "apartments not found"})
-    // }
+  }
+
+  handleDelete(id){
+    deleteApartment(id)
+  }
+
+  handleEdit(apt){
+    console.log(this.props);
+    this.props.history.push({
+      pathname: '/apartments/' + apt.id + '/edit',
+      state: {apartment: apt}
+    });
+  }
+
+  handleNew(){
+    console.log(this.props);
+    this.props.history.push('/apartments/new')
   }
 
   render(){
@@ -47,12 +62,15 @@ class Dashboard extends Component {
             <li>{apt.city} {apt.state}</li>
             <li>{apt.country} {apt.postal_code}</li>
           </ul>
+          <Button name={"Delete"} parentFunction={() => this.handleDelete(apt.id)} />
+          <Button name={"Edit"} apartment={apt} parentFunction={() => this.handleEdit(apt)} />
         </div>
       )
     });
     return (
       <div>
         <h1>Welcome! {user && user.first_name} {user && user.last_name}</h1>
+        <Button name={"Add New Apartment"} parentFunction={this.handleNew.bind(this)}/>
         {apts}
       </div>
     )

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import '../css/Login.css';
 import AuthService from '../services/AuthService';
+import withAuth from '../components/withAuth';
 import { createApartment } from '../services/apartments_api';
 
-export default class Register extends Component {
+class New extends Component {
   constructor(){
     super()
     this.Auth = new AuthService();
@@ -133,3 +134,5 @@ export default class Register extends Component {
     )
   }
 }
+
+export default withAuth(New);
