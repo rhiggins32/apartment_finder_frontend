@@ -56,8 +56,8 @@ class Dashboard extends Component {
     console.log("user", user, this.props);
     let apts = apartments.map((apt, i) => {
       return (
-        <div>
-          <ul key={i.toString()}>
+        <div key={i.toString()}>
+          <ul>
             <li>{apt.address_1} {apt.address_2}</li>
             <li>{apt.city} {apt.state}</li>
             <li>{apt.country} {apt.postal_code}</li>
